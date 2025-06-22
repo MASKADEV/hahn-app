@@ -1,6 +1,6 @@
-### Product Management System - Full Stack Application
+## Product Management System - Full Stack Application
 
-#### Branches
+### Branches
 
 This repository has two main branches:
 
@@ -18,7 +18,7 @@ This repository has two main branches:
    - Context API for state management
    - Bootstrap 5 for styling
 
-### Prerequisites
+## Prerequisites
 
 - Java 17 JDK
 - Node.js 22
