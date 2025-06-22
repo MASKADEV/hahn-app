@@ -1,8 +1,8 @@
 package com.hahn.infrastructure.web;
 
-import com.hahn.application.dto.CreateProductRequest;
-import com.hahn.application.dto.ProductResponse;
-import com.hahn.application.dto.UpdateProductRequest;
+import com.hahn.application.dto.product.CreateProductRequest;
+import com.hahn.application.dto.product.ProductResponse;
+import com.hahn.application.dto.product.UpdateProductRequest;
 import com.hahn.application.service.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;

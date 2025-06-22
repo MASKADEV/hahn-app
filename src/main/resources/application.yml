@@ -23,3 +23,8 @@ server:
   error:
     include-message: always
     include-binding-errors: always
+
+jwt:
+  secret: thisIsASecretKeyWithAtLeast32CharactersLong123!
+  access-token-validity: 900000
+  refresh-token-validity: 86400000

@@ -1,4 +1,4 @@
-package com.hahn.infrastructure.persistence;
+package com.hahn.infrastructure.persistence.product;
 
 
 import com.hahn.domain.model.Product;
