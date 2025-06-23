@@ -2,6 +2,7 @@ package com.hahn.infrastructure.persistence.product;
 
 import com.hahn.domain.model.Product;
 import com.hahn.domain.repository.ProductRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -9,12 +10,9 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Repository
+@RequiredArgsConstructor
 public class ProductRepositoryImpl implements ProductRepository {
     private final ProductJpaRepository jpaRepository;
-
-    public ProductRepositoryImpl(ProductJpaRepository jpaRepository) {
-        this.jpaRepository = jpaRepository;
-    }
 
     @Override
     public Product save(Product product) {

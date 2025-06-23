@@ -1,4 +1,4 @@
-package com.hahn.application.security;
+package com.hahn.application.service;
 
 import com.hahn.application.dto.JwtTokenDto;
 import com.hahn.application.dto.user.LoginDto;
@@ -12,6 +12,7 @@ import com.hahn.domain.repository.UserRepository;
 import com.hahn.infrastructure.jwt.JwtTokenProvider;
 import com.hahn.infrastructure.persistence.user.UserMapper;
 import com.hahn.infrastructure.security.UserDetailsImpl;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,27 +20,18 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class AuthService {
     private final AuthenticationManager authenticationManager;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider tokenProvider;
-
-    public AuthService(AuthenticationManager authenticationManager,
-                       UserRepository userRepository,
-                       PasswordEncoder passwordEncoder,
-                       JwtTokenProvider tokenProvider) {
-        this.authenticationManager = authenticationManager;
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.tokenProvider = tokenProvider;
-    }
 
     public JwtTokenDto authenticateUser(LoginDto loginDto) {
         try {
@@ -77,28 +69,11 @@ public class AuthService {
         userRepository.save(user);
     }
 
+    @Transactional(readOnly = true)
     public UserDto getCurrentUser(UserDetailsImpl userDetails) {
         User user = userRepository.findByUsername(userDetails.getUsername())
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         return UserMapper.toDto(user);
-    }
-
-    private Set<String> getRoles(Set<String> strRoles) {
-        Set<String> roles = new HashSet<>();
-
-        if (strRoles == null) {
-            roles.add("ROLE_USER");
-        } else {
-            strRoles.forEach(role -> {
-                if ("admin".equals(role)) {
-                    roles.add("ROLE_ADMIN");
-                } else {
-                    roles.add("ROLE_USER");
-                }
-            });
-        }
-
-        return roles;
     }
 }

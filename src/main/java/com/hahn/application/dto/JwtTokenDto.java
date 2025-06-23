@@ -6,7 +6,6 @@ import lombok.Data;
 public class JwtTokenDto {
     private String accessToken;
     private String refreshToken;
-    private String tokenType = "Bearer";
 
     public JwtTokenDto(String accessToken, String refreshToken) {
         this.accessToken = accessToken;

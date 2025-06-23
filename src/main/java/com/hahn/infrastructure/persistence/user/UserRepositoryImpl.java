@@ -2,17 +2,15 @@ package com.hahn.infrastructure.persistence.user;
 
 import com.hahn.domain.model.User;
 import com.hahn.domain.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
+@RequiredArgsConstructor
 public class UserRepositoryImpl implements UserRepository {
     private final UserJpaRepository jpaRepository;
-
-    public UserRepositoryImpl(UserJpaRepository jpaRepository) {
-        this.jpaRepository = jpaRepository;
-    }
 
     @Override
     public User save(User user) {

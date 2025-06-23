@@ -8,6 +8,7 @@ import com.hahn.domain.exception.ResourceNotFoundException;
 import com.hahn.domain.model.Product;
 import com.hahn.domain.repository.ProductRepository;
 import com.hahn.infrastructure.persistence.product.ProductMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,13 +16,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional
+@RequiredArgsConstructor
 public class ProductService {
     private final ProductRepository productRepository;
-
-    public ProductService(ProductRepository productRepository) {
-        this.productRepository = productRepository;
-    }
 
     public ProductDto createProduct(CreateProductDto request) {
         Product product = Product.create(

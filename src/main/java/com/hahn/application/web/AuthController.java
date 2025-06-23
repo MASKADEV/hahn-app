@@ -1,4 +1,4 @@
-package com.hahn.infrastructure.web;
+package com.hahn.application.web;
 
 import com.hahn.application.dto.ApiResponse;
 import com.hahn.application.dto.JwtTokenDto;
@@ -6,13 +6,12 @@ import com.hahn.application.dto.user.LoginDto;
 import com.hahn.application.dto.user.SignupDto;
 import com.hahn.application.dto.user.UserDto;
 import com.hahn.domain.exception.UnauthorizedException;
-import com.hahn.domain.model.User;
 import com.hahn.infrastructure.jwt.JwtTokenProvider;
 import com.hahn.infrastructure.security.UserDetailsImpl;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import com.hahn.application.security.AuthService;
+import com.hahn.application.service.AuthService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 

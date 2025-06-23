@@ -1,4 +1,4 @@
-package com.hahn.infrastructure.web;
+package com.hahn.application.web;
 
 import com.hahn.application.dto.ApiResponse;
 import com.hahn.application.dto.product.CreateProductDto;
