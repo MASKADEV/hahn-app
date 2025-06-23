@@ -6,7 +6,8 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Getter
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
 public class Product {
     private Long id;
     private String name;
@@ -16,8 +17,6 @@ public class Product {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private boolean active;
-
-    private Product() {}
 
     public static Product create(String name, String description, BigDecimal price, Integer quantity) {
         if (name == null || name.trim().isEmpty()) {

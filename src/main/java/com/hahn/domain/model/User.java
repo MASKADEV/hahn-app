@@ -7,7 +7,8 @@ import java.util.Collections;
 import java.util.Set;
 
 @Getter
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
     private Long id;
     private String username;
