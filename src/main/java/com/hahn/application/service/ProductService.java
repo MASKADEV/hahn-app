@@ -1,11 +1,13 @@
 package com.hahn.application.service;
 
-import com.hahn.application.dto.product.CreateProductRequest;
-import com.hahn.application.dto.product.ProductResponse;
-import com.hahn.application.dto.product.UpdateProductRequest;
+import com.hahn.application.dto.ApiResponse;
+import com.hahn.application.dto.product.CreateProductDto;
+import com.hahn.application.dto.product.ProductDto;
+import com.hahn.application.dto.product.UpdateProductDto;
 import com.hahn.domain.exception.ResourceNotFoundException;
 import com.hahn.domain.model.Product;
 import com.hahn.domain.repository.ProductRepository;
+import com.hahn.infrastructure.persistence.product.ProductMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,7 +23,7 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public ProductResponse createProduct(CreateProductRequest request) {
+    public ProductDto createProduct(CreateProductDto request) {
         Product product = Product.create(
                 request.getName(),
                 request.getDescription(),
@@ -29,24 +31,24 @@ public class ProductService {
                 request.getQuantity()
         );
         Product savedProduct = productRepository.save(product);
-        return toResponse(savedProduct);
+        return ProductMapper.toDto(savedProduct);
     }
 
     @Transactional(readOnly = true)
-    public List<ProductResponse> getAllProducts() {
+    public List<ProductDto> getAllProducts() {
         return productRepository.findActiveProducts().stream()
-                .map(this::toResponse)
+                .map(ProductMapper::toDto)
                 .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
-    public ProductResponse getProductById(Long id) {
+    public ProductDto getProductById(Long id) {
         return productRepository.findById(id)
-                .map(this::toResponse)
+                .map(ProductMapper::toDto)
                 .orElseThrow(() -> new ResourceNotFoundException("Product not found with id: " + id));
     }
 
-    public ProductResponse updateProduct(Long id, UpdateProductRequest request) {
+    public ProductDto updateProduct(Long id, UpdateProductDto request) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Product not found with id: " + id));
 
@@ -62,7 +64,7 @@ public class ProductService {
         }
 
         Product updatedProduct = productRepository.save(product);
-        return toResponse(updatedProduct);
+        return ProductMapper.toDto(updatedProduct);
     }
 
     public void deleteProduct(Long id) {
@@ -71,18 +73,5 @@ public class ProductService {
 
         product.deactivate();
         productRepository.save(product);
-    }
-
-    private ProductResponse toResponse(Product product) {
-        ProductResponse response = new ProductResponse();
-        response.setId(product.getId());
-        response.setName(product.getName());
-        response.setDescription(product.getDescription());
-        response.setPrice(product.getPrice());
-        response.setQuantity(product.getQuantity());
-        response.setCreatedAt(product.getCreatedAt());
-        response.setUpdatedAt(product.getUpdatedAt());
-        response.setActive(product.isActive());
-        return response;
     }
 }

@@ -3,9 +3,9 @@ spring:
     name: hahn
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/hahn
-    username: postgres
-    password: admin
+    url: jdbc:postgresql://localhost:5432/db
+    username: decq
+    password: decq
     driver-class-name: org.postgresql.Driver
 
   jpa:
@@ -23,6 +23,7 @@ server:
   error:
     include-message: always
     include-binding-errors: always
+  port: 8888
 
 jwt:
   secret: thisIsASecretKeyWithAtLeast32CharactersLong123!

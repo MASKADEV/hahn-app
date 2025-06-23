@@ -1,8 +1,10 @@
 package com.hahn.infrastructure.persistence.user;
 
+import com.hahn.application.dto.user.UserDto;
 import com.hahn.domain.model.User;
+import com.hahn.infrastructure.security.UserDetailsImpl;
 
-interface UserMapper {
+public interface UserMapper {
     static UserEntity toEntity(User user) {
         UserEntity entity = new UserEntity();
         entity.setId(user.getId());
@@ -31,5 +33,20 @@ interface UserMapper {
         }
 
         return user;
+    }
+
+    static UserDto toDto(User user) {
+        UserDto dto = new UserDto();
+        dto.setId(user.getId());
+        dto.setUsername(user.getUsername());
+        dto.setEmail(user.getEmail());
+        dto.setRoles(user.getRoles());
+        return dto;
+    }
+
+    static UserDto toDto(UserDetailsImpl userDetails) {
+        UserDto dto = new UserDto();
+        dto.setUsername(userDetails.getUsername());
+        return dto;
     }
 }

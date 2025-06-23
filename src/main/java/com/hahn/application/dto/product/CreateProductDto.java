@@ -5,7 +5,7 @@ import lombok.Data;
 import java.math.BigDecimal;
 
 @Data
-public class CreateProductRequest {
+public class CreateProductDto {
     @NotBlank(message = "Name is required")
     @Size(max = 255, message = "Name must be less than 255 characters")
     private String name;

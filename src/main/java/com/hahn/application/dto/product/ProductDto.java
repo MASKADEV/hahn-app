@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
-public class ProductResponse {
+public class ProductDto {
     private Long id;
     private String name;
     private String description;

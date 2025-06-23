@@ -1,9 +1,11 @@
 package com.hahn.infrastructure.persistence.product;
 
 
+import com.hahn.application.dto.product.ProductDto;
 import com.hahn.domain.model.Product;
 
-interface ProductMapper {
+public interface ProductMapper {
+
     static ProductEntity toEntity(Product product) {
         ProductEntity entity = new ProductEntity();
         entity.setId(product.getId());
@@ -28,5 +30,18 @@ interface ProductMapper {
                 entity.getUpdatedAt(),
                 entity.isActive()
         );
+    }
+
+    static ProductDto toDto(Product product) {
+        ProductDto dto = new ProductDto();
+        dto.setId(product.getId());
+        dto.setName(product.getName());
+        dto.setDescription(product.getDescription());
+        dto.setPrice(product.getPrice());
+        dto.setQuantity(product.getQuantity());
+        dto.setCreatedAt(product.getCreatedAt());
+        dto.setUpdatedAt(product.getUpdatedAt());
+        dto.setActive(product.isActive());
+        return dto;
     }
 }

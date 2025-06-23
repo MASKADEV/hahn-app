@@ -1,13 +1,19 @@
 package com.hahn.infrastructure.web;
 
+import com.hahn.application.dto.ApiResponse;
 import com.hahn.application.dto.JwtTokenDto;
-import com.hahn.application.dto.user.LoginRequest;
-import com.hahn.application.dto.user.SignupRequest;
+import com.hahn.application.dto.user.LoginDto;
+import com.hahn.application.dto.user.SignupDto;
+import com.hahn.application.dto.user.UserDto;
+import com.hahn.domain.exception.UnauthorizedException;
+import com.hahn.domain.model.User;
 import com.hahn.infrastructure.jwt.JwtTokenProvider;
+import com.hahn.infrastructure.security.UserDetailsImpl;
 import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import com.hahn.application.security.AuthService;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -22,28 +28,40 @@ public class AuthController {
         this.tokenProvider = tokenProvider;
     }
 
+    @GetMapping("/me")
+    public ResponseEntity<ApiResponse<UserDto>> getCurrentUser(
+            @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        UserDto userDto = authService.getCurrentUser(userDetails);
+        return ResponseEntity.ok(ApiResponse.success("Current user fetched successfully", userDto));
+    }
+
     @PostMapping("/signin")
-    public ResponseEntity<JwtTokenDto> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-        JwtTokenDto jwt = authService.authenticateUser(loginRequest);
-        return ResponseEntity.ok(jwt);
+    public ResponseEntity<ApiResponse<JwtTokenDto>> authenticateUser(@Valid @RequestBody LoginDto loginDto) {
+        JwtTokenDto jwt = authService.authenticateUser(loginDto);
+        return ResponseEntity.ok(ApiResponse.success("User authenticated successfully", jwt));
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
-        authService.registerUser(signUpRequest);
-        return ResponseEntity.ok("User registered successfully!");
+    public ResponseEntity<ApiResponse<Void>> registerUser(@Valid @RequestBody SignupDto signUpDto) {
+        authService.registerUser(signUpDto);
+        return ResponseEntity.ok(ApiResponse.success("User registered successfully!"));
     }
 
     @PostMapping("/refreshtoken")
-    public ResponseEntity<JwtTokenDto> refreshToken(@RequestHeader("Authorization") String refreshToken) {
+    public ResponseEntity<ApiResponse<JwtTokenDto>> refreshToken(@RequestHeader("Authorization") String refreshToken) {
         String token = refreshToken.substring(7);
         if (!tokenProvider.validateToken(token)) {
-            throw new RuntimeException("Refresh token is invalid!");
+            throw new UnauthorizedException("Refresh token is invalid!");
         }
 
         Authentication authentication = tokenProvider.getAuthentication(token);
         String newAccessToken = tokenProvider.createAccessToken(authentication);
 
-        return ResponseEntity.ok(new JwtTokenDto(newAccessToken, token));
+        return ResponseEntity.ok(
+                ApiResponse.success(
+                        "Token refreshed successfully",
+                        new JwtTokenDto(newAccessToken, token)
+                )
+        );
     }
 }
