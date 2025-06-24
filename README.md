@@ -55,7 +55,7 @@ Before you begin, ensure you have the following installed:
 
 1. **Clone the frontend branch**:
    ```bash
-   git clone -b frontend <repository-url>
+   git clone -b frontend https://github.com/MASKADEV/hahn-app.git
    ```
 
 2. **Navigate to frontend directory**:
