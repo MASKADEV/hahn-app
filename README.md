@@ -25,7 +25,7 @@ Before you begin, ensure you have the following installed:
 
 1. **Clone the backend branch**:
    ```bash
-   git clone -b backend [<repository-url>](https://github.com/MASKADEV/hahn-app.git)
+   git clone -b backend https://github.com/MASKADEV/hahn-app.git
    ```
 
 2. **Navigate to backend directory**:
