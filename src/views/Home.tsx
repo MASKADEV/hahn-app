@@ -11,6 +11,7 @@ import { useCurrentUser, useLogout } from "../api/authQueries.ts";
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
+import {ProgressSpinner} from "primereact/progressspinner";
 
 const Home = () => {
     const navigate = useNavigate();
@@ -95,8 +96,20 @@ const Home = () => {
         );
     };
 
-    if (isLoading) return <div className="flex justify-center items-center h-screen">Loading products...</div>;
-    if (error) return <div className="flex justify-center items-center h-screen">Error loading products: {error.message}</div>;
+    if (isLoading)
+        return (
+            <div className="flex align-items-center justify-content-center min-h-screen">
+                <ProgressSpinner />
+            </div>
+        );
+
+    if (error)
+        return toast.current?.show({
+            severity: 'error',
+            summary: 'Error',
+            detail: error.message,
+            life: 3000
+        });
 
     return (
         <div className="container mx-auto px-4 py-8">
