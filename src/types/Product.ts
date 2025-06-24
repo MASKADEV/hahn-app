@@ -11,11 +11,11 @@ export interface Product {
 
 export interface CreateProduct {
     name: string;
-    description: string;
+    description: string | undefined;
     price: number;
     quantity: number;
 }
 
-export interface UpdateProduct extends CreateProduct {
+export interface UpdateProduct extends Partial<CreateProduct> {
     id: number;
 }

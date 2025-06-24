@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { useEffect } from "react";
 import { useCreateProduct, useProduct, useUpdateProduct } from "../../api/productQueries.ts";
-import type { UpdateProduct } from "../../types/Product.ts";
+import type {Product, UpdateProduct} from "../../types/Product.ts";
 import { InputText } from 'primereact/inputtext';
 import { InputNumber } from 'primereact/inputnumber';
 import { InputTextarea } from 'primereact/inputtextarea';
@@ -23,8 +23,6 @@ const productSchema = z.object({
         .min(0, 'Quantity must be positive'),
 });
 
-type ProductFormData = z.infer<typeof productSchema>;
-
 const ProductForm = () => {
     const { id } = useParams();
     const navigate = useNavigate();
@@ -42,7 +40,7 @@ const ProductForm = () => {
         handleSubmit,
         formState: { errors },
         reset,
-    } = useForm<ProductFormData>({
+    } = useForm<Product>({
         resolver: zodResolver(productSchema),
         defaultValues: {
             name: '',
@@ -63,7 +61,7 @@ const ProductForm = () => {
         }
     }, [isEditing, product, reset]);
 
-    const onSubmit = (data: ProductFormData) => {
+    const onSubmit = (data: Product ) => {
         if (isEditing && id) {
             const updateData: UpdateProduct = { ...data, id: Number(id) };
             updateProduct(updateData, {

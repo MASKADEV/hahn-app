@@ -1,13 +1,6 @@
 import {createContext, type ReactNode, useContext} from 'react';
 import {useCurrentUser, useLogin, useLogout, useSignup} from '../api/authQueries';
-
-interface AuthContextType {
-    user: any;
-    isLoading: boolean;
-    login: (credentials: { username: string; password: string }) => Promise<void>;
-    signup: (data: { username: string; email: string; password: string }) => Promise<void>;
-    logout: () => Promise<void>;
-}
+import type {AuthContextType} from "../types/common.ts";
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
