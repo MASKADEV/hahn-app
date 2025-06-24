@@ -49,7 +49,7 @@ Before you begin, ensure you have the following installed:
    mvn clean install
    mvn spring-boot:run
    ```
-   The backend will start at `http://localhost:8080`
+   The backend will start at `http://localhost:8888`
 
 ### Frontend Setup (React)
 
