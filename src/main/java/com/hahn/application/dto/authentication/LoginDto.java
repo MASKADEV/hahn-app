@@ -1,4 +1,4 @@
-package com.hahn.application.dto.user;
+package com.hahn.application.dto.authentication;
 
 import jakarta.validation.constraints.*;
 import lombok.Data;

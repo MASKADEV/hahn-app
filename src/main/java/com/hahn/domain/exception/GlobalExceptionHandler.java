@@ -1,7 +1,7 @@
 package com.hahn.domain.exception;
 
-import com.hahn.application.dto.ApiResponse;
-import com.hahn.application.dto.ErrorDto;
+import com.hahn.application.dto.common.ApiResponse;
+import com.hahn.application.dto.common.ErrorDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;

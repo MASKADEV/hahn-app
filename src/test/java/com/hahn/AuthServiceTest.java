@@ -1,8 +1,8 @@
 package com.hahn;
 
-import com.hahn.application.dto.JwtTokenDto;
-import com.hahn.application.dto.user.LoginDto;
-import com.hahn.application.dto.user.SignupDto;
+import com.hahn.application.dto.common.JwtTokenDto;
+import com.hahn.application.dto.authentication.LoginDto;
+import com.hahn.application.dto.authentication.SignupDto;
 import com.hahn.application.dto.user.UserDto;
 import com.hahn.application.service.AuthService;
 import com.hahn.domain.enums.Role;

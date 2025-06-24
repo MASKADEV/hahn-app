@@ -1,6 +1,6 @@
 package com.hahn.application.web;
 
-import com.hahn.application.dto.ApiResponse;
+import com.hahn.application.dto.common.ApiResponse;
 import com.hahn.application.dto.product.CreateProductDto;
 import com.hahn.application.dto.product.ProductDto;
 import com.hahn.application.dto.product.UpdateProductDto;

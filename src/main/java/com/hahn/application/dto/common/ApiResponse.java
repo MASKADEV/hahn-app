@@ -1,4 +1,4 @@
-package com.hahn.application.dto;
+package com.hahn.application.dto.common;
 
 import lombok.*;
 
