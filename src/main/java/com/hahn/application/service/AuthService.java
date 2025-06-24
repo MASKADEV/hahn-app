@@ -11,7 +11,6 @@ import com.hahn.domain.model.User;
 import com.hahn.domain.repository.UserRepository;
 import com.hahn.infrastructure.jwt.JwtTokenProvider;
 import com.hahn.infrastructure.persistence.user.UserMapper;
-import com.hahn.infrastructure.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -22,8 +21,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -45,7 +42,9 @@ public class AuthService {
             String accessToken = tokenProvider.createAccessToken(authentication);
             String refreshToken = tokenProvider.createRefreshToken(authentication);
 
-            return new JwtTokenDto(accessToken, refreshToken);
+            UserDto userDto = getCurrentUser(loginDto.getUsername());
+
+            return new JwtTokenDto(accessToken, refreshToken, userDto);
         } catch (BadCredentialsException ex) {
             throw new UnauthorizedException("Invalid username or password");
         }
@@ -70,8 +69,8 @@ public class AuthService {
     }
 
     @Transactional(readOnly = true)
-    public UserDto getCurrentUser(UserDetailsImpl userDetails) {
-        User user = userRepository.findByUsername(userDetails.getUsername())
+    public UserDto getCurrentUser(String username) {
+        User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         return UserMapper.toDto(user);

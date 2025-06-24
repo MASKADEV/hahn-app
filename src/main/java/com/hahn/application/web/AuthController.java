@@ -27,13 +27,6 @@ public class AuthController {
         this.tokenProvider = tokenProvider;
     }
 
-    @GetMapping("/me")
-    public ResponseEntity<ApiResponse<UserDto>> getCurrentUser(
-            @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        UserDto userDto = authService.getCurrentUser(userDetails);
-        return ResponseEntity.ok(ApiResponse.success("Current user fetched successfully", userDto));
-    }
-
     @PostMapping("/signin")
     public ResponseEntity<ApiResponse<JwtTokenDto>> authenticateUser(@Valid @RequestBody LoginDto loginDto) {
         JwtTokenDto jwt = authService.authenticateUser(loginDto);
@@ -59,7 +52,7 @@ public class AuthController {
         return ResponseEntity.ok(
                 ApiResponse.success(
                         "Token refreshed successfully",
-                        new JwtTokenDto(newAccessToken, token)
+                        new JwtTokenDto(newAccessToken, token, null)
                 )
         );
     }
